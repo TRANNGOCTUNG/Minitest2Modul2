@@ -1,5 +1,10 @@
 package display;
 
+import jdk.swing.interop.DragSourceContextWrapper;
+
+import java.util.Scanner;
+
+
 import books.Books;
 import books.FictionBooks;
 import books.ProgrammingBooks;
@@ -20,9 +25,16 @@ public class BookDisplay {
         for (Books b: books){
             System.out.println(b);
         }
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter Language");
+        String language = scanner.nextLine();
+
+        System.out.println("Enter Category");
+        String category = scanner.nextLine();
+
         System.out.println("Tổng tiền của 10 cuốn sách:" + sum(books));
-        System.out.println("Số sách lập trình có ngôn ngữ tiếng anh:" +totalJava(books) );
-        System.out.println("Số sách thuộc kiểu viễn tưởng:" + totalCategory(books) );
+        System.out.println("Số sách lập trình có ngôn ngữ :" +totalJava(books, language) );
+        System.out.println("Số sách thuộc kiểu viễn tưởng:" + totalCategory(books,category) );
         System.out.println("Tổng số sách lập trình có giá nhỏ hơn 10000 nghìn:" + checkPrice(books));
         System.out.println("Tổng số sách viễn tưởng có giá nhỏ hơn 10000 nghìn:" + checkPrice1(books));
     }
@@ -33,22 +45,22 @@ public class BookDisplay {
         }
         return total;
     }
-    public static int totalJava(Books[] books){
+    public static int totalJava(Books[] books, String language){
         int total = 0;
         for(Books i : books) {
             if (i instanceof ProgrammingBooks) {
-                if (((ProgrammingBooks) i).getLanguage().equals("English")) {
+                if (((ProgrammingBooks) i).getLanguage().equals(language)) {
                     total++;
                 }
             }
         }
         return total;
     }
-    public static int totalCategory(Books[] books){
+    public static int totalCategory(Books[] books,String category){
             int total = 0;
             for (Books i : books) {
                 if (i instanceof FictionBooks) {
-                    if (((FictionBooks) i).getCategory().equals("Viễn tưởng")) {
+                    if (((FictionBooks) i).getCategory().equals(category)) {
                         total++;
                     }
                 }
